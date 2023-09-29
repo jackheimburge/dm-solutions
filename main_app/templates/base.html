@@ -18,10 +18,13 @@
           <li></li>
         </ul>
         <ul class="right">
+          {% if user.is_authenticated %}
           <li><a href="">Add Vehicle</a></li>
           <li><a href="">All Vehicles</a></li>
           <li><a href="">Insights</a></li>
           <li><a href="">My Portal</a></li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+          {% endif %}
         </ul>
       </div>
     </nav>
