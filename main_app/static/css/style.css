@@ -2,6 +2,8 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background: url("https://i.imgur.com/f5J8SY0.jpg");
+  background-size: cover;
 }
 
 main {
@@ -11,4 +13,34 @@ main {
 footer.page-footer {
   padding-top: 0;
   text-align: right;
+}
+
+.landing-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-card-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+}
+
+label[for="id_username"],
+label[for="id_password"] {
+  color: white;
+}
+
+input[name="username"] {
+  color: white;
+}
+
+#login-logo {
+  margin-top: 20px;
+  height: 100px;
+  width: 120px;
 }
