@@ -9,25 +9,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
   <header class="navbar-fixed">
-    <nav>
-      <div class="nav-wrapper">
-        <ul>
-          <li></li>
-        </ul>
-        <ul class="right">
-          {% if user.is_authenticated %}
-          <li><a href="">Add Vehicle</a></li>
-          <li><a href="">All Vehicles</a></li>
-          <li><a href="">Insights</a></li>
-          <li><a href="">My Portal</a></li>
-          <li><a href="{% url 'logout' %}">Log Out</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+  {% if user.is_authenticated %}
+  <ul id="dropdown1" class="dropdown-content">
+  <li><a href="">My Portal</a></li>
+  <li><a href="">Insights</a></li>
+  <li class="divider"></li>
+  <li><a href="{% url 'logout' %}">Logout</a></li>
+</ul>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Logo</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="sass.html">Add Vehicle</a></li>
+      <li><a href="badges.html">All Vehicles</a></li>
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>
+  {% endif %}
   </header>
   <main class="container">
     {% block content %}
@@ -36,5 +40,9 @@
   <footer class="page-footer">
     <div class="right">All Rights Reserved, &copy; 2023 Dealership Mangement Solutions &nbsp;</div>
   </footer>
+<script>
+    const dropdownEl = document.querySelector('.dropdown-trigger');
+    M.Dropdown.init(dropdownEl);
+</script>
 </body>
 </html>
