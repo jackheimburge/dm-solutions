@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -40,7 +42,7 @@ class Vehicle(models.Model):
     color = models.CharField(max_length=30)
     notes = models.TextField(max_length=1000)
     engine = models.CharField(max_length=30)
-    is_available = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True)
     odometer = models.IntegerField()
     interior = models.CharField(max_length=40)
     transmission = models.CharField(
@@ -58,6 +60,7 @@ class Vehicle(models.Model):
         choices=VEHICLE_TYPES,
         default=VEHICLE_TYPES[0][0]
     )
+    image = models.ImageField(upload_to="dms", blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 

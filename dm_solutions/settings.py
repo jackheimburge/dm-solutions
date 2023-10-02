@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main_app',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -88,6 +89,26 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key": os.environ['AWS_ACCESS_KEY_ID'],
+            "secret_key": os.environ['AWS_SECRET_ACCESS_KEY'],
+            "bucket_name": os.environ['S3_BUCKET'],
+        },
+    },
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key": os.environ['AWS_ACCESS_KEY_ID'],
+            "secret_key": os.environ['AWS_SECRET_ACCESS_KEY'],
+            "bucket_name": os.environ['S3_BUCKET'],
+        },
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
