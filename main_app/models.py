@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 TRANSMISSIONS = (
     ('M', 'Manual'),
@@ -16,6 +17,19 @@ VEHICLE_TYPES = (
     ('B', 'Boat'),
     ('M', 'Motorcycle')
 )
+
+
+class Location(models.Model):
+    city = models.CharField(max_length=30)
+    state_code = models.CharField('State', max_length=2)
+    zipcode = models.IntegerField('Zip Code')
+
+    def __str__(self):
+        return f'{self.city}, {self.state_code} {self.zipcode}'
+    
+    @property
+    def combined(self):
+        return f'{self.city}, {self.state_code} {self.zipcode}'
 
 
 class Vehicle(models.Model):
@@ -44,6 +58,8 @@ class Vehicle(models.Model):
         choices=VEHICLE_TYPES,
         default=VEHICLE_TYPES[0][0]
     )
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     def minimum_sale_price(self):
         if self.condition == 'new':
