@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <section class="col s2">
+        <ul>
+            <li>Make</li>
+            <li>Model</li>
+            <li>Blah blah</li>
+            <li>Masdfsdaf</li>
+        </ul>
+    </section>
+    <section class="col s10">
+        {% for v in vehicles %}
+        <div>
+            <div>
+                <h1>{{ v.make }}</h1>
+                <h1>{{ v.model }}</h1>
+                <h1>{{ v.engine }}</h1>
+                <img src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ v.image }}" alt="">
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+
+
+
+{% endblock %}
