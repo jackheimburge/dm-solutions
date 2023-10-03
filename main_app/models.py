@@ -28,7 +28,7 @@ class Location(models.Model):
 
     def __str__(self):
         return f'{self.city}, {self.state_code} {self.zipcode}'
-    
+
     @property
     def combined(self):
         return f'{self.city}, {self.state_code} {self.zipcode}'
@@ -45,6 +45,7 @@ class Vehicle(models.Model):
     is_available = models.BooleanField(default=True)
     odometer = models.IntegerField()
     interior = models.CharField(max_length=40)
+    sold_for = models.DecimalField("Sold For", decimal_places=2, max_digits=10, blank=True, null=True)
     transmission = models.CharField(
         max_length=30,
         choices=TRANSMISSIONS,

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -39,3 +39,9 @@ class VehicleUpdate(UpdateView):
 class VehicleDelete(DeleteView):
     model = Vehicle
     success_url = '/vehicles'
+
+class Dashboard(ListView):
+    model = Vehicle
+
+    def get_queryset(self):
+        return Vehicle.objects.filter(user=self.request.user).order_by('-sold_for')

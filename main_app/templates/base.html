@@ -15,7 +15,7 @@
   <header class="navbar-fixed">
   {% if user.is_authenticated %}
   <ul id="dropdown1" class="dropdown-content">
-  <li><a href="">My Portal</a></li>
+  <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
   <li><a href="">Insights</a></li>
   <li class="divider"></li>
   <li><a href="{% url 'logout' %}">Logout</a></li>
