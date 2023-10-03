@@ -11,19 +11,23 @@
             <li>Masdfsdaf</li>
         </ul>
     </section>
-    <section class="col s10">
-        {% for v in vehicles %}
-        <a href="{% url 'vehicle_detail' v.id %}">
-            <div>
-                <div>
-                    <h1>{{ v.make }}</h1>
-                    <h1>{{ v.model }}</h1>
-                    <h1>{{ v.engine }}</h1>
-                    <img src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ v.image }}" alt="">
+    <section class="col s12 m10">
+        <div class="row">
+            {% for v in vehicles %}
+            <div class="card col s12 m6 l4">
+                <div class="card-image">
+                    <img src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ v.image }}">
+                    <span class="card-title">{{ v.make }} {{ v.model }}</span>
+                </div>
+                <div class="card-content">
+                    <p>{{ v.notes }}</p>
+                </div>
+                <div class="card-action">
+                    <a href="{% url 'vehicle_detail' v.id %}">Details</a>
                 </div>
             </div>
-        </a>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </section>
 </div>
 

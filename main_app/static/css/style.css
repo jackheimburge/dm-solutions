@@ -23,6 +23,10 @@ footer.page-footer {
   align-items: center;
 }
 
+#dropdown1 a {
+  color: #424242;
+}
+
 #login-card-layout {
   display: flex;
   flex-direction: column;
@@ -43,4 +47,32 @@ input[name="username"] {
   margin-top: 20px;
   height: 100px;
   width: 120px;
+}
+
+#vehicle-form {
+  background-color: rgba(51,51,51,0.8);
+  border-radius: 15px;
+}
+
+#vehicle-form tbody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#vehicle-form tr {
+  display: grid;
+  grid-column: auto;
+}
+
+#vehicle-form th label,
+#vehicle-form td input {
+  color: white;
+}
+
+#vehicle-form li span {
+  color: #424242;
+}
+
+#detail-img {
+  width: 100%;
 }
