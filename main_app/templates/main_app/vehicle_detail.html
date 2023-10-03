@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</span>
+          <img src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ vehicle.image }}" alt="{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}">
+          <p>{{vehicle.notes}}</p>
+          <p>{{vehicle.get_condition_display}}</p>
+          <p>{{vehicle.odometer}}</p>
+          <p>{{vehicle.is_available}}</p>
+          <p>{{vehicle.interior}}</p>
+          <p>{{vehicle.engine}}</p>
+          <p>{{vehicle.color}}</p>
+          <p>{{vehicle.get_transmission_display}}</p>
+          <p>{{vehicle.get_vehicle_type_display}}</p>
+        </div>
+        <div class="card-action">
+          <a href="{% url 'vehicle_update' vehicle.id %}">Edit</a>
+          <a href="{% url 'vehicle_delete' vehicle.id %}">Delete</a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+          
+
+
+{% endblock %}

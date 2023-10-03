@@ -1,8 +1,8 @@
-from typing import Any
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
+from django.views.generic import DetailView
 from .models import Vehicle, Location
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class Home(LoginView):
@@ -27,3 +27,15 @@ def vehicle_index(request):
         'vehicles': vehicles,
         'title': 'Vehicle List'
     })
+
+class VehicleDetail(DetailView):
+    model = Vehicle
+
+class VehicleUpdate(UpdateView):
+    model = Vehicle
+    fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
+
+
+class VehicleDelete(DeleteView):
+    model = Vehicle
+    success_url = '/vehicles'
