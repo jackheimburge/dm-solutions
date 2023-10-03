@@ -13,6 +13,7 @@
           <p>{{vehicle.is_available}}</p>
           <p>{{vehicle.interior}}</p>
           <p>{{vehicle.engine}}</p>
+          <p>{{vehicle.sold_for}}</p>
           <p>{{vehicle.color}}</p>
           <p>{{vehicle.get_transmission_display}}</p>
           <p>{{vehicle.get_vehicle_type_display}}</p>
@@ -20,12 +21,12 @@
         <div class="card-action">
           <a href="{% url 'vehicle_update' vehicle.id %}">Edit</a>
           <a href="{% url 'vehicle_delete' vehicle.id %}">Delete</a>
-          
+
         </div>
       </div>
     </div>
   </div>
-          
+
 
 
 {% endblock %}
