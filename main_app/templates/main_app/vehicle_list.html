@@ -1,5 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {% for v in object_list %}
 <p>{{ v.make }}</p>
 <p>{{ v.sold_for }}</p>
 
 {% endfor %}
+
+{% endblock %}

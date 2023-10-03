@@ -21,13 +21,13 @@
   <li><a href="{% url 'logout' %}">Logout</a></li>
 </ul>
 <nav>
-  <div class="nav-wrapper">
+  <div class="nav-wrapper grey darken-2">
     <a href="#!" class="brand-logo">Logo</a>
     <ul class="right hide-on-med-and-down">
       <li><a href="{% url 'add_vehicle'  %}">Add Vehicle</a></li>
       <li><a href="{% url 'vehicle_index' %}">All Vehicles</a></li>
       <!-- Dropdown Trigger -->
-      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ user.username }}<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
   </div>
 </nav>
@@ -37,7 +37,7 @@
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
+  <footer class="page-footer grey darken-2">
     <div class="right">All Rights Reserved, &copy; 2023 Dealership Mangement Solutions &nbsp;</div>
   </footer>
 <script>
