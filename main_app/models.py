@@ -1,5 +1,5 @@
 import os
-
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -63,6 +63,9 @@ class Vehicle(models.Model):
     image = models.ImageField(upload_to="dms", blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('vehicle_detail', kwargs={'pk': self.id})
 
     def minimum_sale_price(self):
         if self.condition == 'new':
