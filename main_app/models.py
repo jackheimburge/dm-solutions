@@ -1,7 +1,8 @@
 import os
 from django.urls import reverse
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 TRANSMISSIONS = (
     ('M', 'Manual'),
@@ -19,7 +20,6 @@ VEHICLE_TYPES = (
     ('B', 'Boat'),
     ('M', 'Motorcycle')
 )
-
 
 class Location(models.Model):
     city = models.CharField(max_length=30)

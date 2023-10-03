@@ -7,7 +7,7 @@
         <div class="card-content white-text">
           <span class="card-title">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</span>
           <img id="detail-img" src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ vehicle.image }}" alt="{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}">
-          <p>{{ vehicle.notes }}</p>
+          <p>Notes: {{ vehicle.notes }}</p>
           <p>{{ vehicle.get_condition_display }}</p>
           <p>{{ vehicle.odometer }}</p>
           <p>{{ vehicle.is_available }}</p>
