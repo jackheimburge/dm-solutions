@@ -9,6 +9,7 @@ urlpatterns = [
     path('vehicles/<int:pk>/', views.VehicleDetail.as_view(), name='vehicle_detail'),
     path('vehicles/<int:pk>/update/',
          views.VehicleUpdate.as_view(), name='vehicle_update'),
+    path('vehicles/<int:pk>/sell/', views.SellVehicle.as_view(), name='sell_vehicle'),
     path('vehicles/<int:pk>/delete/',
          views.VehicleDelete.as_view(), name='vehicle_delete'),
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
