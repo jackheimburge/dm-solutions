@@ -42,6 +42,18 @@ class VehicleUpdate(PermissionRequiredMixin, UpdateView):
     fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
 
 
+class SellVehicle(PermissionRequiredMixin, UpdateView):
+    permission_required = 'change_vehicle'
+    model = Vehicle
+    fields = ['sold_for', 'notes']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.is_available = False
+        return super().form_valid(form)
+    
+
+
 class VehicleDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'delete_vehicle'
     model = Vehicle
