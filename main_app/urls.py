@@ -15,4 +15,5 @@ urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('locations/add', views.AddLocation.as_view(), name='add_location'),
     path('api/total_sales/', views.total_sales, name='total_sales'),
+    path('api/sales_by_make/', views.sales_by_make, name='sales_by_make'),
 ]
