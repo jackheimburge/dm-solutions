@@ -1,0 +1,1 @@
+web: gunicorn dm_solutions.wsgi
