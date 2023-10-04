@@ -153,7 +153,4 @@ LOGOUT_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import django_on_heroku
-django_on_heroku.settings(locals(), databases=False)
-config = locals()
-config['STORAGES']['staticfiles'] = config['STATICFILES_STORAGE']
-del config['STATICFILES_STORAGE']
+django_on_heroku.settings(locals(), databases=False, staticfiles=False)
