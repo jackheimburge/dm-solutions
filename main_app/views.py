@@ -53,6 +53,8 @@ class Dashboard(ListView):
     def get_queryset(self):
         return Vehicle.objects.filter(user=self.request.user).order_by('-sold_for')
 
-class AddLocation(CreateView):
+
+class AddLocation(PermissionRequiredMixin, CreateView):
+    permission_required = 'add_location'
     model = Location
     fields = '__all__'
