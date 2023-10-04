@@ -74,13 +74,14 @@ class AddLocation(PermissionRequiredMixin, CreateView):
 
 def total_sales(request):
     vehicles = Vehicle.objects.filter(user=request.user)
-    labels = [x + 1 for x in range(len(vehicles))]
+    labels = []
     data = []
-    for index, obj in vehicles:
-        if index == 0:
-            data.append(obj.sold_for)
-        else:
-            data.append(obj.sold_for + data.at(index - 1))
+    total_sales_amount = 0
+
+    for index, obj in enumerate(vehicles):
+        labels.append(index + 1)
+        total_sales_amount += obj.sold_for
+        data.append(total_sales_amount)
 
     return JsonResponse({
         'title': 'Total Sales',
@@ -89,6 +90,8 @@ def total_sales(request):
             'datasets': [{
                 'label': 'Sale Amount',
                 'data': data,
+                'backgroundColor':'Grey',
+                'borderColor':'Black',
             }]
         }
 
