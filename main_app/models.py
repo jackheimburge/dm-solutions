@@ -33,6 +33,9 @@ class Location(models.Model):
     def combined(self):
         return f'{self.city}, {self.state_code} {self.zipcode}'
 
+    def get_absolute_url(self):
+        return reverse('vehicle_index')
+
 
 class Vehicle(models.Model):
     year = models.IntegerField()
