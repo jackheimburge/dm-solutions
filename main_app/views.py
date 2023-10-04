@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class Home(LoginView):
@@ -10,7 +11,8 @@ class Home(LoginView):
     template_name = 'home.html'
 
 
-class AddVehicle(CreateView):
+class AddVehicle(PermissionRequiredMixin, CreateView):
+    permission_required = 'add_vehicle'
     model = Vehicle
     fields = ['year', 'make', 'model', 'msrp', 'color', 'notes', 'engine', 'odometer', 'interior', 'transmission' , 'condition',
     'vehicle_type', 'location', 'image']
@@ -28,15 +30,20 @@ def vehicle_index(request):
         'title': 'Vehicle List'
     })
 
-class VehicleDetail(DetailView):
+
+class VehicleDetail(PermissionRequiredMixin, DetailView):
+    permission_required = 'view_vehicle'
     model = Vehicle
 
-class VehicleUpdate(UpdateView):
+
+class VehicleUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'change_vehicle'
     model = Vehicle
     fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
 
 
-class VehicleDelete(DeleteView):
+class VehicleDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'delete_vehicle'
     model = Vehicle
     success_url = '/vehicles'
 
