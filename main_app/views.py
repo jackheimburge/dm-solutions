@@ -1,15 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
+from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
 
 
 class Home(LoginView):
     fields = '__all__'
     template_name = 'home.html'
+
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/dashboard')
+        else:
+            error_message = "Invalid sign up. Please try again...please."
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
 
 
 class AddVehicle(PermissionRequiredMixin, CreateView):
