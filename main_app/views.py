@@ -4,6 +4,7 @@ from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import JsonResponse
 
 
 class Home(LoginView):
@@ -51,7 +52,7 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         form.instance.is_available = False
         return super().form_valid(form)
-    
+
 
 
 class VehicleDelete(PermissionRequiredMixin, DeleteView):
@@ -70,3 +71,25 @@ class AddLocation(PermissionRequiredMixin, CreateView):
     permission_required = 'add_location'
     model = Location
     fields = '__all__'
+
+def total_sales(request):
+    vehicles = Vehicle.objects.filter(user=request.user)
+    labels = [x + 1 for x in range(len(vehicles))]
+    data = []
+    for index, obj in vehicles:
+        if index == 0:
+            data.append(obj.sold_for)
+        else:
+            data.append(obj.sold_for + data.at(index - 1))
+
+    return JsonResponse({
+        'title': 'Total Sales',
+        'data': {
+            'labels': labels,
+            'datasets': [{
+                'label': 'Sale Amount',
+                'data': data,
+            }]
+        }
+
+    })
