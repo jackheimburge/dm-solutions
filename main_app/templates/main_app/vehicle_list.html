@@ -1,33 +1,69 @@
-{% extends 'base.html' %}
-
-{% block content %}
-{% for v in object_list %}
+{% extends 'base.html' %} {% block content %} {% for v in object_list %}
 <p>{{ v.make }}</p>
 <p>{{ v.sold_for }}</p>
 
 {% endfor %}
-<canvas id="chart" width="500" height="500"></canvas>
+<canvas id="totalSalesChart" width="500" height="500"></canvas>
+<canvas id="salesByMakeChart" width="500" height="500"></canvas>
 <script>
-let ctx = document.getElementById("chart").getContext("2d");
+  let tsc = document.getElementById("totalSalesChart").getContext("2d");
+  let sbmc = document.getElementById("salesByMakeChart").getContext("2d");
 
-let chart = new Chart(ctx, {
-  type: "bar",
-  data: {
-     labels: ["2020/Q1", "2020/Q2", "2020/Q3", "2020/Q4"],
-     datasets: [
-        {
-          label: "Gross volume ($)",
-          backgroundColor: "#79AEC8",
-          borderColor: "#417690",
-          data: [26900, 28700, 27300, 29200]
+  let totalSalesChart = new Chart(tsc, {
+    type: "line",
+    options: {
+      responsive: true,
+      title: {
+        text: "",
+        display: false,
+      },
+    },
+  });
+  let salesByMakeChart = new Chart(sbmc, {
+    type: "bar",
+    options: {
+      responsive: true,
+      title: {
+        text: "",
+        display: false,
+      },
+    },
+  });
+  function loadChart(chart, endpoint) {
+    fetch(endpoint)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No Data Retreived!!");
         }
-     ]
-  },
-  options: {
-     title: {
-        text: "Gross Volume in 2020",
-        display: true
-     }
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        const title = jsonResponse.title;
+        const labels = jsonResponse.data.labels;
+        const datasets = jsonResponse.data.datasets;
+
+        chart.data.datasets = [];
+        chart.data.labels = [];
+
+        chart.options.title.text = title;
+        chart.options.title.display = true;
+        chart.data.labels = labels;
+        datasets.forEach((dataset) => {
+          chart.data.datasets.push(dataset);
+        });
+        chart.update();
+      })
+      .catch((error) => {
+        console.error("Failed To Load Data!!");
+      });
   }
-});</script>
+
+  function loadAllCharts(){
+    loadChart(totalSalesChart, '/api/total_sales/');
+    loadChart(salesByMakeChart, '/api/sales_by_make/');
+  }
+
+  loadAllCharts();
+</script>
+
 {% endblock %}
