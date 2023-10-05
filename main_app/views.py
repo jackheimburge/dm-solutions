@@ -34,7 +34,7 @@ def signup(request):
 
 
 class AddVehicle(PermissionRequiredMixin, CreateView):
-    permission_required = 'add_vehicle'
+    permission_required = 'main_app.add_vehicle'
     model = Vehicle
     fields = ['year', 'make', 'model', 'msrp', 'color', 'notes', 'engine', 'odometer', 'interior', 'transmission', 'condition',
               'vehicle_type', 'location', 'image']
@@ -43,6 +43,7 @@ class AddVehicle(PermissionRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Add Vehicle'
         return context
+
 
 @login_required
 def vehicle_index(request):
@@ -88,7 +89,7 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         form.instance.is_available = False
         return super().form_valid(form)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Sell Vehicle'
@@ -152,7 +153,6 @@ def total_sales(request):
                 'pointStyle': 'circle'
             }]
         }
-
     })
 
 
@@ -185,5 +185,4 @@ def sales_by_make(request):
                 'borderColor': 'Black',
             }]
         }
-
     })
