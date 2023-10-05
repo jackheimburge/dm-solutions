@@ -25,6 +25,11 @@
                 <div class="card-action">
                     <a href="{% url 'vehicle_detail' v.id %}">Details</a>
                 </div>
+                {% if v.is_available %}
+                <span class="new badge green" data-badge-caption="Available!"></span>
+                {% else %}
+                <span class="new badge red" data-badge-caption="SOLD!"></span>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

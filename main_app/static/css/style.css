@@ -43,10 +43,21 @@ input[name="username"] {
   color: white;
 }
 
+canvas {
+  background-color: rgba(51,51,51,1);
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
 #login-logo {
   margin-top: 20px;
   height: 100px;
   width: 120px;
+}
+
+#nav-logo {
+  height: 4vh;
+  padding: 5px 0px 0px 25px;
 }
 
 #vehicle-form {
@@ -57,6 +68,7 @@ input[name="username"] {
 #vehicle-form tbody {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 25px;
 }
 
 #vehicle-form tr {

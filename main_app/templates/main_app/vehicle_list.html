@@ -1,10 +1,44 @@
-{% extends 'base.html' %} {% block content %} {% for v in object_list %}
-<p>{{ v.make }}</p>
-<p>{{ v.sold_for }}</p>
-
-{% endfor %}
-<canvas id="totalSalesChart" width="500" height="500"></canvas>
-<canvas id="salesByMakeChart" width="500" height="500"></canvas>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Dashboard</h1>
+<hr>
+<table class="striped centered responsive-table">
+    <thead>
+        <th>Make</th>
+        <th>Model</th>
+        <th>MSRP</th>
+        <th>Sold For</th>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for v in object_list %}
+        <tr>
+            <td>{{ v.make }}</td>
+            <td>{{ v.model }}</td>
+            <td>{{ v.msrp }}</td>
+            <td>{{ v.sold_for }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td>NO</td>
+            <td>VEHICLES</td>
+            <td>SOLD</td>
+            <td>YET</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% if object_list %}
+<div class="row">
+    <div class="col s6">
+        <canvas id="totalSalesChart" width="500" height="500"></canvas>
+    </div>
+    <div class="col s6">
+        <canvas id="salesByMakeChart" width="500" height="500"></canvas>
+    </div>
+</div>
+{% endif %}
 <script>
     let tsc = document.getElementById("totalSalesChart").getContext("2d");
     let sbmc = document.getElementById("salesByMakeChart").getContext("2d");
@@ -21,6 +55,23 @@
                 y: {
                     ticks: {
                         precision: 0,
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'white'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'white'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: "white"
                     }
                 }
             }
@@ -38,6 +89,23 @@
                 y: {
                     ticks: {
                         precision: 0,
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'white'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'white'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: "white"
                     }
                 }
             }

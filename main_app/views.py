@@ -3,8 +3,9 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
@@ -25,7 +26,7 @@ def signup(request):
         else:
             error_message = "Invalid sign up. Please try again...please."
     form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
+    context = {'form': form, 'error_message': error_message, 'title': 'Sign Up'}
     return render(request, 'registration/signup.html', context)
 
 
@@ -40,7 +41,7 @@ class AddVehicle(PermissionRequiredMixin, CreateView):
         context['title'] = 'Add Vehicle'
         return context
 
-
+@login_required
 def vehicle_index(request):
     vehicles = Vehicle.objects.all()
 
@@ -78,8 +79,13 @@ class VehicleDelete(PermissionRequiredMixin, DeleteView):
     success_url = '/vehicles'
 
 
-class Dashboard(ListView):
+class Dashboard(LoginRequiredMixin, ListView):
     model = Vehicle
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"{self.request.user.username}'s Dashboard"
+        return context
 
     def get_queryset(self):
         return Vehicle.objects.filter(user=self.request.user).order_by('-sold_for')
@@ -107,10 +113,11 @@ def total_sales(request):
         'data': {
             'labels': labels,
             'datasets': [{
-                'label': 'Sale Amount($)',
+                'label': 'Total Sold($)',
                 'data': data,
                 'backgroundColor': 'Grey',
                 'borderColor': 'Black',
+                'pointStyle': 'circle'
             }]
         }
 
@@ -140,7 +147,7 @@ def sales_by_make(request):
         'data': {
             'labels': labels,
             'datasets': [{
-                'label': 'Make',
+                'label': 'Sold',
                 'data': data,
                 'backgroundColor': 'Pink',
                 'borderColor': 'Black',

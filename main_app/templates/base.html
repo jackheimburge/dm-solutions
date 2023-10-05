@@ -27,16 +27,18 @@
       {% if user.is_authenticated %}
       <ul id="dropdown1" class="dropdown-content">
         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="">Insights</a></li>
         <li class="divider"></li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
       </ul>
+      {% endif %}
       <nav>
         <div class="nav-wrapper grey darken-2">
-          <a href="/" class="brand-logo">Logo</a>
+          <a href="/" class="brand-logo"><img id="nav-logo" src="https://i.imgur.com/4Y616Y2.png" alt="Totally not made with AI logo" /></a>
           <ul class="right hide-on-med-and-down">
+            {% if perms.add_vehicle %}
             <li><a href="{% url 'add_vehicle'  %}">Add Vehicle</a></li>
             <li><a href="{% url 'add_location'  %}">Add Location</a></li>
+            {% endif %}
             <li><a href="{% url 'vehicle_index' %}">All Vehicles</a></li>
             <!-- Dropdown Trigger -->
             <li>
@@ -49,7 +51,6 @@
           </ul>
         </div>
       </nav>
-      {% endif %}
     </header>
     <main class="container">{% block content %} {% endblock %}</main>
     <footer class="page-footer grey darken-2">
