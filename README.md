@@ -29,10 +29,10 @@ Dealership Management Solutions is a dynamic web application meticulously crafte
 # Screenshot
 | Description | Screenshot |
 |------------ | ------------|
-| <h3 align="center">Landing Page</h3> | <img src="https://i.imgur.com/RUf3tvr.jpeg">
-| <h3 align="center">Dashboard</h3> | <img src="https://i.imgur.com/a6BSQgV.jpg">
-| <h3 align="center">Vehicle Form</h3> | <img src="https://i.imgur.com/ZL24YFD.jpg">
-| <h3 align="center">Vehicle List</h3> | <img src="https://i.imgur.com/ZL24YFD.jpg">
+| <h3 align="center">Landing Page</h3> | <img src="https://i.imgur.com/jiIeLvC.jpg">
+| <h3 align="center">Dashboard</h3> | <img src="https://i.imgur.com/a8a0XBy.png`">
+| <h3 align="center">Vehicle Form</h3> | <img src="https://i.imgur.com/Qab6kYt.jpg">
+| <h3 align="center">Vehicle List</h3> | <img src="https://i.imgur.com/DWgYhQp.jpg">
 
 # Technologies Used
 ![Python 3](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
