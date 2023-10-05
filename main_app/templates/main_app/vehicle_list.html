@@ -31,6 +31,7 @@
 </table>
 {% if object_list %}
 <div class="row">
+    <div class="row">
     <div class="col s6">
         <canvas id="totalSalesChart" width="500" height="500"></canvas>
     </div>
@@ -62,6 +63,9 @@
                     }
                 },
                 x: {
+                    ticks: {
+                        color: 'white'
+                    },
                     grid: {
                         color: 'white'
                     }
@@ -96,6 +100,9 @@
                     }
                 },
                 x: {
+                    ticks: {
+                        color: 'white'
+                    },
                     grid: {
                         color: 'white'
                     }

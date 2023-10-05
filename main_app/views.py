@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.contrib.auth import login
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -17,10 +18,12 @@ class Home(LoginView):
 
 def signup(request):
     error_message = ''
+    employee_group, created = Group.objects.get_or_create(name="Employee")
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.groups.add(employee_group)
             login(request, user)
             return redirect('/dashboard')
         else:
@@ -43,7 +46,11 @@ class AddVehicle(PermissionRequiredMixin, CreateView):
 
 @login_required
 def vehicle_index(request):
-    vehicles = Vehicle.objects.all()
+    sort = request.GET.get('sort')
+    if sort:
+        vehicles = Vehicle.objects.order_by(sort)
+    else:
+        vehicles = Vehicle.objects.all()
 
     return render(request, 'vehicles/index.html', {
         'vehicles': vehicles,
@@ -52,7 +59,7 @@ def vehicle_index(request):
 
 
 class VehicleDetail(PermissionRequiredMixin, DetailView):
-    permission_required = 'view_vehicle'
+    permission_required = 'main_app.view_vehicle'
     model = Vehicle
 
     def get_context_data(self, **kwargs):
@@ -62,7 +69,7 @@ class VehicleDetail(PermissionRequiredMixin, DetailView):
 
 
 class VehicleUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = 'change_vehicle'
+    permission_required = 'main_app.change_vehicle'
     model = Vehicle
     fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
 
@@ -73,7 +80,7 @@ class VehicleUpdate(PermissionRequiredMixin, UpdateView):
 
 
 class SellVehicle(PermissionRequiredMixin, UpdateView):
-    permission_required = 'change_vehicle'
+    permission_required = 'main_app.change_vehicle'
     model = Vehicle
     fields = ['sold_for', 'notes']
 
@@ -89,7 +96,7 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
 
 
 class VehicleDelete(PermissionRequiredMixin, DeleteView):
-    permission_required = 'delete_vehicle'
+    permission_required = 'main_app.delete_vehicle'
     model = Vehicle
     success_url = '/vehicles'
 
@@ -112,7 +119,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 
 
 class AddLocation(PermissionRequiredMixin, CreateView):
-    permission_required = 'add_location'
+    permission_required = 'main_app.add_location'
     model = Location
     fields = '__all__'
 
@@ -174,7 +181,7 @@ def sales_by_make(request):
             'datasets': [{
                 'label': 'Sold',
                 'data': data,
-                'backgroundColor': 'Pink',
+                'backgroundColor': ['Pink', 'Purple', 'Orange', 'Yellow'],
                 'borderColor': 'Black',
             }]
         }
