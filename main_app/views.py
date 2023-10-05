@@ -55,11 +55,21 @@ class VehicleDetail(PermissionRequiredMixin, DetailView):
     permission_required = 'view_vehicle'
     model = Vehicle
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Detail'
+        return context
+
 
 class VehicleUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'change_vehicle'
     model = Vehicle
     fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Update'
+        return context
 
 
 class SellVehicle(PermissionRequiredMixin, UpdateView):
@@ -71,12 +81,22 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         form.instance.is_available = False
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Sell Vehicle'
+        return context
 
 
 class VehicleDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'delete_vehicle'
     model = Vehicle
     success_url = '/vehicles'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Delete'
+        return context
 
 
 class Dashboard(LoginRequiredMixin, ListView):
@@ -95,6 +115,11 @@ class AddLocation(PermissionRequiredMixin, CreateView):
     permission_required = 'add_location'
     model = Location
     fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add Location'
+        return context
 
 
 def total_sales(request):
