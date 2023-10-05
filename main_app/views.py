@@ -3,8 +3,10 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import DetailView, ListView
 from .models import Vehicle, Location
 from django.contrib.auth import login
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
@@ -16,16 +18,18 @@ class Home(LoginView):
 
 def signup(request):
     error_message = ''
+    employee_group, created = Group.objects.get_or_create(name="Employee")
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.groups.add(employee_group)
             login(request, user)
             return redirect('/dashboard')
         else:
             error_message = "Invalid sign up. Please try again...please."
     form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
+    context = {'form': form, 'error_message': error_message, 'title': 'Sign Up'}
     return render(request, 'registration/signup.html', context)
 
 
@@ -40,9 +44,13 @@ class AddVehicle(PermissionRequiredMixin, CreateView):
         context['title'] = 'Add Vehicle'
         return context
 
-
+@login_required
 def vehicle_index(request):
-    vehicles = Vehicle.objects.all()
+    sort = request.GET.get('sort')
+    if sort:
+        vehicles = Vehicle.objects.order_by(sort)
+    else:
+        vehicles = Vehicle.objects.all()
 
     return render(request, 'vehicles/index.html', {
         'vehicles': vehicles,
@@ -51,18 +59,28 @@ def vehicle_index(request):
 
 
 class VehicleDetail(PermissionRequiredMixin, DetailView):
-    permission_required = 'view_vehicle'
+    permission_required = 'main_app.view_vehicle'
     model = Vehicle
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Detail'
+        return context
 
 
 class VehicleUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = 'change_vehicle'
+    permission_required = 'main_app.change_vehicle'
     model = Vehicle
     fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Update'
+        return context
+
 
 class SellVehicle(PermissionRequiredMixin, UpdateView):
-    permission_required = 'change_vehicle'
+    permission_required = 'main_app.change_vehicle'
     model = Vehicle
     fields = ['sold_for', 'notes']
 
@@ -70,25 +88,45 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         form.instance.is_available = False
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Sell Vehicle'
+        return context
 
 
 class VehicleDelete(PermissionRequiredMixin, DeleteView):
-    permission_required = 'delete_vehicle'
+    permission_required = 'main_app.delete_vehicle'
     model = Vehicle
     success_url = '/vehicles'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Vehicle Delete'
+        return context
 
-class Dashboard(ListView):
+
+class Dashboard(LoginRequiredMixin, ListView):
     model = Vehicle
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"{self.request.user.username}'s Dashboard"
+        return context
 
     def get_queryset(self):
         return Vehicle.objects.filter(user=self.request.user).order_by('-sold_for')
 
 
 class AddLocation(PermissionRequiredMixin, CreateView):
-    permission_required = 'add_location'
+    permission_required = 'main_app.add_location'
     model = Location
     fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add Location'
+        return context
 
 
 def total_sales(request):
@@ -107,10 +145,11 @@ def total_sales(request):
         'data': {
             'labels': labels,
             'datasets': [{
-                'label': 'Sale Amount($)',
+                'label': 'Total Sold($)',
                 'data': data,
                 'backgroundColor': 'Grey',
                 'borderColor': 'Black',
+                'pointStyle': 'circle'
             }]
         }
 
@@ -140,9 +179,9 @@ def sales_by_make(request):
         'data': {
             'labels': labels,
             'datasets': [{
-                'label': 'Make',
+                'label': 'Sold',
                 'data': data,
-                'backgroundColor': 'Pink',
+                'backgroundColor': ['Pink', 'Purple', 'Orange', 'Yellow'],
                 'borderColor': 'Black',
             }]
         }

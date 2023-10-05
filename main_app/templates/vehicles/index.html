@@ -1,29 +1,58 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-<div class="row">
-    <section class="col s2">
-        <ul>
-            <li>Make</li>
-            <li>Model</li>
-            <li>Blah blah</li>
-            <li>Masdfsdaf</li>
+<h1 class="center-align">Vehicle List</h1>
+<div class="row" id="vehicle-index">
+    <section class="col s2" id="index-filters">
+        <ul class="collection">
+            <a href="{% url 'vehicle_index' %}?sort=-year"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=-year' %}active{% endif %}">Year</a>
+            <a href="{% url 'vehicle_index' %}?sort=vehicle_type"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=vehicle_type' %}active{% endif %}">Type</a>
+            <a href="{% url 'vehicle_index' %}?sort=make"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=make' %}active{% endif %}">Make</a>
+            <a href="{% url 'vehicle_index' %}?sort=model"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=model' %}active{% endif %}">Model</a>
+            <a href="{% url 'vehicle_index' %}?sort=-msrp"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=-msrp' %}active{% endif %}">MSRP</a>
+            <a href="{% url 'vehicle_index' %}?sort=color"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=color' %}active{% endif %}">Color</a>
+            <a href="{% url 'vehicle_index' %}?sort=-is_available"
+                class="collection-item center-align {% if request.get_full_path == '/vehicles/?sort=-is_available' %}active{% endif %}">Availability</a>
         </ul>
     </section>
     <section class="col s12 m10">
         <div class="row">
             {% for v in vehicles %}
-            <div class="card col s12 m6 l4">
-                <div class="card-image">
-                    <img src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ v.image }}">
-                    <span class="card-title">{{ v.make }} {{ v.model }}</span>
-                </div>
-                <div class="card-content">
-                    <p>{{ v.notes }}</p>
-                </div>
+            <div class="card col s12 m6 l4 center-align vehicle-index-card">
+                <a href="{% url 'vehicle_detail' v.id %}">
+                    <div class="card-image">
+                        {% if v.image %}
+                        <img id="index-img"
+                            src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/{{ v.image }}">
+                        {% else %}
+                        <img id="index-img"
+                            src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/dms/default.png">
+                        {% endif %}
+                        {% if v.is_available %}
+                        <span class="new badge green" data-badge-caption="${{ v.msrp }}"></span>
+                        {% endif %}
+                    </div>
+                    <div class="card-content index-card-content">
+                        <span class="card-title" style="font-size: 1.5rem">
+                            {{ v.year }} - {{ v.make }} {{ v.model}}
+                        </span>
+                    </div>
+                </a>
                 <div class="card-action">
-                    <a href="{% url 'vehicle_detail' v.id %}">Details</a>
+                    {% if perms.main_app.delete_vehicle %}
+                    <a href="{% url 'vehicle_delete' v.id %}">Delete</a>
+                    {% endif %}
+                    {% if v.is_available and perms.main_app.change_vehicle %}
+                    <a href="{% url 'sell_vehicle' v.id %}">Sell Vehicle</a>
+                    {% else %}
+                    <span class="red-text text-darken-3">SOLD</span>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
