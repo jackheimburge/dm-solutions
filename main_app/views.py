@@ -71,7 +71,7 @@ class VehicleDetail(PermissionRequiredMixin, DetailView):
 class VehicleUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'main_app.change_vehicle'
     model = Vehicle
-    fields = ['notes', 'condition', 'odometer', 'is_available', 'image']
+    fields = ['notes', 'condition', 'odometer', 'image']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
