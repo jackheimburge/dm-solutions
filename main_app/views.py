@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView
+from typing import Any
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import DetailView, ListView
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import Group
 from .models import Vehicle, Location
 from django.contrib.auth import login
-from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import JsonResponse
-from django.contrib.auth.forms import UserCreationForm
 
 
 class Home(LoginView):
@@ -94,6 +95,11 @@ class SellVehicle(PermissionRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Sell Vehicle'
         return context
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['sold_for'] = self.get_object().minimum_sale_price
+        return initial
 
 
 class VehicleDelete(PermissionRequiredMixin, DeleteView):

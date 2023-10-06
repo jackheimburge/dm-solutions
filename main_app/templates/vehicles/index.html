@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block content %}
 
 <h1 class="center-align">Vehicle List</h1>
@@ -35,7 +36,7 @@
                             src="https://catcollector-barrientosjesus.s3.us-west-1.amazonaws.com/dms/default.png">
                         {% endif %}
                         {% if v.is_available %}
-                        <span class="new badge green" data-badge-caption="${{ v.msrp }}"></span>
+                        <span class="new badge green" data-badge-caption="${{ v.msrp|intcomma }}"></span>
                         {% endif %}
                     </div>
                     <div class="card-content index-card-content">

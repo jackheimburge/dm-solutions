@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,26 +13,28 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+
 <body>
-<div class="landing-container">
-  <div class="login-card">
-    <div class="col s12 m6">
+  <div class="landing-container">
+    <div class="login-card">
+      <div class="col s12 m6">
         <form method="POST" action="{% url 'login' %}">
-      <div id="login-card-layout" class="z-depth-5 card grey darken-3 s12 m6 white-text">
-          <img id="login-logo" src="https://i.imgur.com/4Y616Y2.png" alt="Totally not made with AI logo" />
-        <div class="card-content white-text">
-          <span class="card-title center-align">Log In</span>
-          {% csrf_token %}
-  {{ form.as_p }}
-        </div>
-        <div class="card-action">
-          <button type="submit" class="btn">Log In</button>
-          <a class="btn blue darken-1" href="{% url 'signup' %}">Sign Up</a>
-        </div>
-      </div>
+          <div id="login-card-layout" class="z-depth-5 card grey darken-3 s12 m6 white-text">
+            <img id="login-logo" src="https://i.imgur.com/4Y616Y2.png" alt="Totally not made with AI logo" />
+            <div class="card-content white-text">
+              <span class="card-title center-align">Log In</span>
+              {% csrf_token %}
+              {{ form.as_p }}
+            </div>
+            <div class="card-action">
+              <button type="submit" class="btn">Log In</button>
+              <a class="btn blue darken-1" href="{% url 'signup' %}">Sign Up</a>
+            </div>
+          </div>
         </form>
+      </div>
     </div>
   </div>
-    </div>
 </body>
+
 </html>
