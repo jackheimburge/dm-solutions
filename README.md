@@ -26,6 +26,11 @@
 ## 📝 Description
 Dealership Management Solutions is a dynamic web application meticulously crafted to empower every department within your dealership. Its primary purpose is to empower your dealership by effectively managing inventory and monitoring sales and workforce performance.
 
+## Getting Started 
+
+- [Trello](https://trello.com/b/6lQqhYKl/dms) 
+- [Pitch Deck](https://docs.google.com/presentation/d/1PCnhLFeiaNYmc6JWd8OSLtSEFXDPPtzptYhilK5eiRM/) 
+
 # Screenshot
 | Description | Screenshot |
 |------------ | ------------|
