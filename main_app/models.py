@@ -71,9 +71,9 @@ class Vehicle(models.Model):
 
     def minimum_sale_price(self):
         if self.condition == 'new':
-            return self.msrp * 0.9
+            return int((self.msrp * 90) / 100)
         else:
-            return self.msrp * 0.75
+            return int((self.msrp * 75) / 100)
 
     def __str__(self):
         return f"{self.make} - {self.model}: ${self.msrp}"

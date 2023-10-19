@@ -3,23 +3,23 @@
 
 <!-- Add the login form -->
 <div class="landing-container">
-    <div class="login-card">
-      <div class="col s12 m6">
-        <form method="POST" action="{% url 'signup' %}">
-          <div id="login-card-layout" class="z-depth-5 card grey darken-3 s12 m6 white-text">
-            <img id="login-logo" src="https://i.imgur.com/4Y616Y2.png" alt="Totally not made with AI logo" />
-            <div class="card-content white-text">
-              <span class="card-title center-align">Sign Up</span>
-              {% csrf_token %}
-              {{ form.as_p }}
-            </div>
-            <div class="card-action">
-              <button type="submit" class="btn">Sign Up</button>
-            </div>
+  <div class="login-card">
+    <div class="col s12 m6">
+      <form method="POST" action="{% url 'signup' %}">
+        <div id="login-card-layout" class="z-depth-5 card grey darken-3 s12 m6 white-text">
+          <img id="login-logo" src="https://i.imgur.com/4Y616Y2.png" alt="Totally not made with AI logo" />
+          <div class="card-content white-text">
+            <span class="card-title center-align">Sign Up</span>
+            {% csrf_token %}
+            {{ form.as_p }}
           </div>
-        </form>
-      </div>
+          <div class="card-action">
+            <button type="submit" class="btn">Sign Up</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
 {% endblock %}

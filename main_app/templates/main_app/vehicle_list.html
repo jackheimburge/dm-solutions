@@ -29,17 +29,20 @@
         {% endif %}
     </tbody>
 </table>
+
 {% if object_list %}
 <div class="row">
     <div class="row">
-    <div class="col s6">
-        <canvas id="totalSalesChart" width="500" height="500"></canvas>
-    </div>
-    <div class="col s6">
-        <canvas id="salesByMakeChart" width="500" height="500"></canvas>
+        <div class="col s6">
+            <canvas id="totalSalesChart" width="500" height="500"></canvas>
+        </div>
+        <div class="col s6">
+            <canvas id="salesByMakeChart" width="500" height="500"></canvas>
+        </div>
     </div>
 </div>
 {% endif %}
+
 <script>
     let tsc = document.getElementById("totalSalesChart").getContext("2d");
     let sbmc = document.getElementById("salesByMakeChart").getContext("2d");
